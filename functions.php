@@ -118,4 +118,23 @@ function get_post_views($column_name, $id){
 }
 add_action('manage_posts_custom_column', 'get_post_views', 10, 2);
 
+
+
+/*-----------------------------------------SINGLE PRODUCT PAGE---------------------------*/
+
+
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+
+add_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 1);
+
+/*
+add_action( 'woocommerce_before_single_product_summary' , 'add_custom_text_before_product_title', 5 );
+
+function add_custom_text_before_product_title() {
+   echo "<span>".get_field('custom_product_type')."</span>" ;
+}
+*/
+
 ?>
+
+
