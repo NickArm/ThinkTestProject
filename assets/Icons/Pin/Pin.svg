@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="51px" viewBox="0 0 34 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Ping</title>
+    <g id="Export" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M17,1 C8.604,1 1,7.806 1,16.204 C1,24.6 7.938,34.624 17,49 C26.062,34.624 33,24.6 33,16.204 C33,7.806 25.398,1 17,1 Z M17,23 C13.686,23 11,20.314 11,17 C11,13.686 13.686,11 17,11 C20.314,11 23,13.686 23,17 C23,20.314 20.314,23 17,23 Z" id="Ping" stroke="#FFFFFF" stroke-width="1.5" fill="#F14C26" fill-rule="nonzero"></path>
+    </g>
+</svg>

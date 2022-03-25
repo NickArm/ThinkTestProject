@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Delivery Options</title>
+    <g id="Export" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Delivery-Options">
+            <polygon id="Path" points="0 0 32 0 32 32 0 32"></polygon>
+            <polyline id="Path" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="16 4 26.6666667 10 26.6666667 22 16 28 5.33333333 22 5.33333333 10 16 4"></polyline>
+            <line x1="16" y1="16" x2="26.6666667" y2="10" id="Path" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="16" y1="16" x2="16" y2="28" id="Path" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="16" y1="16" x2="5.33333333" y2="10" id="Path" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="21.3333333" y1="7" x2="10.6666667" y2="13" id="Path" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></line>
+        </g>
+    </g>
+</svg>
