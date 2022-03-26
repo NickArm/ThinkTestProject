@@ -58,20 +58,35 @@
 	  
 	  <!---------------------------OUR FAVORITES------------------------------------->
 	  
-	 <div class="py-5 our-favorites main-section">
+<div class="py-5 our-favorites main-section">
     <div class="container">
 		<h2 class="section-title">Our Favorites</h2>	  
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-        <div class="col">
+	  
+	  
+        <?php
+		$homepageProducts = new WP_Query(array(
+			'post_type' => 'product',
+			'posts_per_page'=>4
+		));
+		
+		while ($homepageProducts -> have_posts()){
+		$homepageProducts->the_post();
+		$product = new WC_Product( $post->ID );?>
+		
+		<div class="col">
           <div class="card">
-			<img src="<?php echo get_theme_file_uri('assets/categories/Kayaks/Fishing.png');?>"/>
+			<?php echo the_post_thumbnail();?>
           </div>
 		  <div class="card_body">
 			<span class="our-favorites-categories">PERFOMANCE TOURING</span>
-              <h5 class="card-text">Zergun Ormer HV(Skeg + Rudder)</h5>
-              <span class="our-favorites-price">€1,345</span>
+              <a href="<?php the_permalink(); ?>"><h5 class="card-text"><?php the_title(); ?></h5></a>
+              <span class="our-favorites-price"><?php echo $product->get_price_html();?></span>
             </div>
         </div>
+		<?php } wp_reset_postdata();?>
+		
+		<!--
         <div class="col">
           <div class="card">
            <img src="<?php echo get_theme_file_uri('assets/categories/Kayaks/Kids.png');?>" />
@@ -107,7 +122,7 @@
             </div>
           
         </div>
-        
+        -->
 
       </div>
     </div>
