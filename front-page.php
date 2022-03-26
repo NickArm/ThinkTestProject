@@ -72,7 +72,11 @@
 		
 		while ($homepageProducts -> have_posts()){
 		$homepageProducts->the_post();
-		$product = new WC_Product( $post->ID );?>
+		$product = new WC_Product( $post->ID );
+		$show_check = get_field('show_in_homepage') ;
+		if ($show_check == 1 ){
+		?>
+		
 		
 		<div class="col">
           <div class="card">
@@ -84,7 +88,8 @@
               <span class="our-favorites-price"><?php echo $product->get_price_html();?></span>
             </div>
         </div>
-		<?php } wp_reset_postdata();?>
+		
+		<?php  }		} wp_reset_postdata();?>
 		
 		<!--
         <div class="col">
