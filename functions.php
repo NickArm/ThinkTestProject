@@ -1,10 +1,18 @@
-<?
+<?php
 function custom_theme_files(){
+	
     wp_enqueue_script('main_modernizr',get_theme_file_uri('/js/bootstrap.bundle.min.js'),NULL,true);
+	 wp_enqueue_script('main_modernizr',get_theme_file_uri('/js/custom.js'),NULL,true);
     wp_enqueue_style('theme_main_style_extra_style', get_theme_file_uri('/css/bootstrap.min.css'));
 	wp_enqueue_style('theme_main_style', get_theme_file_uri('/style.css'));
+	wp_enqueue_style('theme_main_style_owl_carousel', get_theme_file_uri('/css/owl.carousel.min.css'));
+	wp_enqueue_style('theme_main_style_owl_carousel_theme', get_theme_file_uri('/css/owl.theme.default.min.css'));
 }
 
+			
+			
+			
+			
 add_action('wp_enqueue_scripts','custom_theme_files');
 
 //add custom menus

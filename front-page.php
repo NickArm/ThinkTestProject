@@ -61,13 +61,12 @@
 <div class="py-5 our-favorites main-section">
     <div class="container">
 		<h2 class="section-title">Our Favorites</h2>	  
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-	  
+     
+	  <div class="owl-carousel ">
 	  
         <?php
 		$homepageProducts = new WP_Query(array(
-			'post_type' => 'product',
-			'posts_per_page'=>4
+			'post_type' => 'product'
 		));
 		
 		while ($homepageProducts -> have_posts()){
@@ -76,61 +75,19 @@
 		$show_check = get_field('show_in_homepage') ;
 		if ($show_check == 1 ){
 		?>
-		
-		
-		<div class="col">
-          <div class="card">
+		<div>
+          <div class="carousel_thumb">
 			<?php echo the_post_thumbnail();?>
           </div>
 		  <div class="card_body">
 			<span class="our-favorites-categories">PERFOMANCE TOURING</span>
               <a href="<?php the_permalink(); ?>"><h5 class="card-text"><?php the_title(); ?></h5></a>
-              <span class="our-favorites-price"><?php echo $product->get_price_html();?></span>
-            </div>
+              <span class="our-favorites-price"><?php echo preg_replace('/.00/', '',  $product->get_price_html());?></span>
+			</div>
         </div>
-		
 		<?php  }		} wp_reset_postdata();?>
-		
-		<!--
-        <div class="col">
-          <div class="card">
-           <img src="<?php echo get_theme_file_uri('assets/categories/Kayaks/Kids.png');?>" />
-		   </div>
-           <div class="card_body">
-			<span class="our-favorites-categories">PERFOMANCE TOURING</span>
-              <h5 class="card-text">Perception Expression 11</h5>
-              <span class="our-favorites-price">€925</span>
-            </div>
-          
-        </div>
-        <div class="col">
-          <div class="card">
-            <img src="<?php echo get_theme_file_uri('assets/categories/Kayaks/SUPs.png');?>"/>
-			</div>
-            <div class="card_body">
-			 
-			<span class="our-favorites-categories">PERFOMANCE TOURING</span>
-              <h5 class="card-text">Perception Expression 15</h5>
-              <span class="our-favorites-price">€1,120</span>
-            </div>
-         
-        </div>
-
-        <div class="col">
-          <div class="card">
-            <img src="<?php echo get_theme_file_uri('assets/categories/Kayaks/Surfski.png');?>"/>
-			</div>
-            <div class="card_body">
-			<span class="our-favorites-categories">PERFOMANCE TOURING</span>
-              <h5 class="card-text">Edge 14.5 - rudder</h5>
-              <span class="our-favorites-price">€975</span>
-            </div>
-          
-        </div>
-        -->
-
       </div>
-    </div>
+   
   </div>
   
   

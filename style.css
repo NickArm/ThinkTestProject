@@ -152,6 +152,13 @@ h5, .card-text{
 	margin: 40px;
 }
 
+.owl-carousel .card_body a, bdi, .owl-carousel .card_body  .price ins{
+	text-decoration:none;
+}
+
+.carousel_thumb{
+	border: 2px solid #f6f6f6;
+}
 
 .our-blog .blog-details{
 	font-size:12px;
@@ -203,4 +210,19 @@ h5, .card-text{
 /*-------------single product ------------*/
 .product_title{
 	color:#1a1a1a;
+}
+
+
+.owl-nav{position: absolute!important;
+right: 0;
+bottom: 407px;}
+
+.owl-carousel .owl-dot, .owl-carousel .owl-nav .owl-next, .owl-carousel .owl-nav .owl-prev{
+	
+	font-size: 24px;
+  background: #f6f6f6;
+  padding: 0px 15px;
+}
+.owl-carousel  .owl-prev{
+	margin-right:7px;
 }
