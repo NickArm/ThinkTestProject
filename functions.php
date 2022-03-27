@@ -30,32 +30,67 @@ add_action('after_setup_theme','theme_features');
 
 //add Custom Post Settings
 
-function think_post_settings_page() {
+function custom_admin_menu() {
+    add_menu_page(
+        __( 'Post Settings', 'my-textdomain' ),
+        __( 'Post Settings', 'my-textdomain' ),
+        'manage_options',
+        'custom-post-settings-page',
+        'my_admin_page_contents',
+        'dashicons-admin-generic',
+        3
+    );
+}
+add_action( 'admin_menu', 'custom_admin_menu' );
 
-	add_menu_page(
-		'Home Page Post Settings',
-		'Home Page Post Settings', 
-		'manage_options', 
-		'think-post-settings',
-		'think_post_settings_content',
-		'gear', 
-		5
-	);
-
+function my_admin_page_contents() {
+    ?>
+    <h1> <?php esc_html_e( 'Post Settings.', 'my-plugin-textdomain' ); ?> </h1>
+    <form method="POST" action="options.php">
+    <?php
+    settings_fields( 'custom-post-settings-page' );
+    do_settings_sections( 'custom-post-settings-page' );
+    submit_button();
+    ?>
+    </form>
+    <?php
 }
 
-add_action( 'admin_menu', 'think_post_settings_page' );
 
-function think_post_settings_content(){
+add_action( 'admin_init', 'my_settings_init' );
 
-		echo '<div class="wrap"><h1>Home Page Post Settings</h1><form method="post" action="options.php">';
-		settings_fields( 'think_post_settings' ); 
-		do_settings_sections( 'think_post_settings' ); 
-		submit_button();
+function my_settings_init() {
 
-	echo '</form></div>';
+    add_settings_section(
+        'sample_page_setting_section',
+        __( 'Custom settings', 'my-textdomain' ),
+        'my_setting_section_callback_function',
+        'custom-post-settings-page'
+    );
 
+		add_settings_field(
+		   'set_no_of_posts_field',
+		   __( 'How many posts will appear on the homepage', 'my-textdomain' ),
+		   'my_setting_markup',
+		   'custom-post-settings-page',
+		   'sample_page_setting_section'
+		);
+
+		register_setting( 'custom-post-settings-page', 'set_no_of_posts_field' );
 }
+
+
+function my_setting_section_callback_function() {
+}
+
+
+function my_setting_markup() {
+    ?>
+    <input type="text" id="set_no_of_posts_field" name="set_no_of_posts_field" value="<?php echo get_option( 'set_no_of_posts_field' ); ?>">
+    <?php
+}
+
+
 
 
 
@@ -64,7 +99,7 @@ function think_post_settings_content(){
 function count_posts_from_api_page(){
 
      add_submenu_page(
-                     'edit.php', //$parent_slug
+                     'edit.php', 
                      'Count External Posts',
                      'Count External Posts',
                      'manage_options', 

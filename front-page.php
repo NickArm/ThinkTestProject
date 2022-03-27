@@ -90,7 +90,6 @@
    
   </div>
   
-  
   <!---------------------------OUR BLOG------------------------------------->
 
 	<div class="our-blog main-section">
@@ -98,11 +97,11 @@
 	<h2 class="section-title">Keep Updated</h2>	  
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <?php 
+		$num_posts = get_option( 'set_no_of_posts_field' );
+		if ( empty($num_posts)){$num_posts=3;}
 		$homepagePosts = new WP_Query(array(
-			'posts_per_page'=>3
-		));
-		
-		
+			'posts_per_page'=>$num_posts
+		));		
 		while ($homepagePosts -> have_posts()){
 		$homepagePosts->the_post();?>
 	  
