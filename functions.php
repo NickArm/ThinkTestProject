@@ -2,16 +2,13 @@
 function custom_theme_files(){
 	
     wp_enqueue_script('main_modernizr',get_theme_file_uri('/js/bootstrap.bundle.min.js'),NULL,true);
-	 wp_enqueue_script('main_modernizr',get_theme_file_uri('/js/custom.js'),NULL,true);
+	wp_enqueue_script('main_modernizr',get_theme_file_uri('/js/custom.js'),NULL,true);
     wp_enqueue_style('theme_main_style_extra_style', get_theme_file_uri('/css/bootstrap.min.css'));
 	wp_enqueue_style('theme_main_style', get_theme_file_uri('/style.css'));
 	wp_enqueue_style('theme_main_style_owl_carousel', get_theme_file_uri('/css/owl.carousel.min.css'));
 	wp_enqueue_style('theme_main_style_owl_carousel_theme', get_theme_file_uri('/css/owl.theme.default.min.css'));
 }
-
-			
-			
-			
+	
 			
 add_action('wp_enqueue_scripts','custom_theme_files');
 
@@ -22,7 +19,25 @@ function theme_features(){
     register_nav_menu('footerLocation1','Footer Menu One');
     register_nav_menu('footerLocation2','Footer Menu Two');
     register_nav_menu('footerLocation3','Footer Menu Three');
-}
+	
+	add_theme_support('woocommerce', array(
+		'thumbnail_image_width' => 1280,
+		'single_image_width'=>255,
+		'product_grid' => array(
+			'default_rows'=>10,
+			'min_rows'=>5,
+			'max_rows'=>10
+			)
+		));
+		add_theme_support('wc-product-gallery-zoom');
+		add_theme_support('wc-product-gallery-lightbox');
+		add_theme_support('wc-product-gallery-slider');
+		
+		if(!isset($content_width)){
+			$content_width=600;
+		}
+		
+}	
 
 add_action('after_setup_theme','theme_features');
 
@@ -167,7 +182,7 @@ add_action('manage_posts_custom_column', 'get_post_views', 10, 2);
 
 
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
-add_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 1);
+/*add_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 1);*/
 
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 30 );
@@ -256,6 +271,88 @@ function my_variable_product_minmax_price_html($price, $product) {
     return $html_min_max_price;
 }
 
+
+remove_action('woocommerce_sidebar','woocommerce_get_sidebar');
+
+
+
+
+//change varation select to buttons
+function variation_radio_buttons($html, $args) {
+  $args = wp_parse_args(apply_filters('woocommerce_dropdown_variation_attribute_options_args', $args), array(
+    'options'          => false,
+    'attribute'        => false,
+    'product'          => false,
+    'selected'         => false,
+    'name'             => '',
+    'id'               => '',
+    'class'            => '',
+    'show_option_none' => __('Choose an option', 'woocommerce'),
+  ));
+
+  if(false === $args['selected'] && $args['attribute'] && $args['product'] instanceof WC_Product) {
+    $selected_key     = 'attribute_'.sanitize_title($args['attribute']);
+    $args['selected'] = isset($_REQUEST[$selected_key]) ? wc_clean(wp_unslash($_REQUEST[$selected_key])) : $args['product']->get_variation_default_attribute($args['attribute']);
+  }
+
+  $options               = $args['options'];
+  $product               = $args['product'];
+  $attribute             = $args['attribute'];
+  $name                  = $args['name'] ? $args['name'] : 'attribute_'.sanitize_title($attribute);
+  $id                    = $args['id'] ? $args['id'] : sanitize_title($attribute);
+  $class                 = $args['class'];
+  $show_option_none      = (bool)$args['show_option_none'];
+  $show_option_none_text = $args['show_option_none'] ? $args['show_option_none'] : __('Choose an option', 'woocommerce');
+
+  if(empty($options) && !empty($product) && !empty($attribute)) {
+    $attributes = $product->get_variation_attributes();
+    $options    = $attributes[$attribute];
+  }
+
+  $radios = '<div class="variation-radios">';
+
+  if(!empty($options)) {
+    if($product && taxonomy_exists($attribute)) {
+      $terms = wc_get_product_terms($product->get_id(), $attribute, array(
+        'fields' => 'all',
+      ));
+
+      foreach($terms as $term) {
+		  
+		  
+        if(in_array($term->slug, $options, true)) {
+          $id = $name.'-'.$term->slug;
+          $radios .= '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($term->slug).'" '.checked(sanitize_title($args['selected']), $term->slug, false).'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $term->name)).'</label>';
+        }
+      }
+    } else {
+      foreach($options as $option) {
+        $id = $name.'-'.$option;
+        $checked    = sanitize_title($args['selected']) === $args['selected'] ? checked($args['selected'], sanitize_title($option), false) : checked($args['selected'], $option, false);
+        $radios    .= '<input type="radio" id="'.esc_attr($id).'" name="'.esc_attr($name).'" value="'.esc_attr($option).'" id="'.sanitize_title($option).'" '.$checked.'><label for="'.esc_attr($id).'">'.esc_html(apply_filters('woocommerce_variation_option_name', $option)).'</label>';
+      }
+    }
+  }
+
+  $radios .= '</div>';
+    
+  return $html.$radios;
+}
+add_filter('woocommerce_dropdown_variation_attribute_options_html', 'variation_radio_buttons', 20, 2);
+
+function variation_check($active, $variation) {
+  if(!$variation->is_in_stock() && !$variation->backorders_allowed()) {
+    return false;
+  }
+  return $active;
+}
+add_filter('woocommerce_variation_is_active', 'variation_check', 10, 2);
+
+
+
+
 ?>
+
+
 
 

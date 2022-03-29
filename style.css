@@ -226,3 +226,139 @@ bottom: 407px;}
 .owl-carousel  .owl-prev{
 	margin-right:7px;
 }
+
+
+.size-auto,
+.size-full,
+.size-large,
+.size-medium,
+.size-thumbnail{
+	max-width:100%;
+	height:auto;
+}
+.price  ins{text-decoration: none!important;}
+
+.custom_category{
+	font-size:12px;
+	color:#1a1a1a;
+	line-height:18px;
+	text-decoration: none;
+}
+
+.woocommerce div.product p.price, .woocommerce div.product span.price{
+	color:#1a1a1a;
+}
+
+.woocommerce-Price-amount bdi{
+	font-size:30px;
+	color:#1a1a1a;
+	line-height:36px;
+	text-decoration: none;
+}
+
+.price del .amount bdi{
+	font-size:14px;
+	color:#f14c26;
+	line-height:18px;
+	text-decoration: none;
+}
+
+.points-tag{
+	transform: skew(-25deg); 
+    -o-transform: skew(-25deg); 
+    -moz-transform: skew(-25deg); 
+    -webkit-transform: skew(-25deg);
+	padding: 4px 11px;
+    background: #e9e9e9;
+    font-size: 12px;
+    color: #1a1a1a;
+	float: left;
+	margin-right: 15px;
+}
+
+.woocommerce button.button.alt{
+	width: 384px;
+	height: 50px;
+	background-color: #f14c26;
+}
+.quantity input{
+	width: 96px;
+	height: 50px;
+}
+
+
+
+/* single product thmbnails new fix*/
+.woocommerce .flex-control-thumbs {
+    margin: 10px 0px 10px -5px !important; /
+    width: 100% !important; 
+	display: flex;
+}
+
+ol.flex-control-nav.flex-control-thumbs li {
+	width: 15% !important; 
+}
+
+@media (max-width:414px){
+	ol.flex-control-nav.flex-control-thumbs li {
+		width: 18% !important; 
+	}
+}
+
+
+@media (min-width:568px) and (max-width:768px){
+
+	.woocommerce .flex-control-thumbs {
+    	margin: 10px 0px 10px -5px !important; 
+    	width: 15% !important;
+	}
+
+	ol.flex-control-nav.flex-control-thumbs li {
+		width: 90% !important; 
+	}
+}
+@media (min-width:769px) and (max-width:1024px){
+
+	.woocommerce .flex-control-thumbs {
+    	margin: 10px 0px 10px -5px !important; 
+    	width: 12% !important;
+	}
+
+	ol.flex-control-nav.flex-control-thumbs li {
+		width: 100% !important; 
+	}
+}
+
+@media (min-width:568px) {
+	.woocommerce .flex-control-nav { 
+		position: absolute; 
+		top:-10px; 
+		left: 0px;
+	}
+	.flex-control-thumbs {
+		display: flex;
+		flex-direction: column;
+	}
+}
+@media (min-width:568px) and (max-width:768px){
+	.woocommerce .flex-viewport {
+		width: 86.5% !important;
+		left: 100px !important;
+	}
+}
+@media (min-width:769px) and (max-width:1024px){
+	.woocommerce .flex-viewport {
+		width: 87% !important;
+		left: 95px !important;
+	}
+}
+@media (min-width:1025px){
+	.woocommerce .flex-viewport {
+		width: 85% !important;
+		left: 100px !important;
+	}	
+}
+
+.woocommerce div.product form.cart .variations select{
+	display:none;
+}
