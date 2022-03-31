@@ -181,14 +181,91 @@ add_action('manage_posts_custom_column', 'get_post_views', 10, 2);
 /*-----------------------------------------SINGLE PRODUCT PAGE---------------------------*/
 
 
-remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
-/*add_action('woocommerce_single_product_summary', 'woocommerce_template_single_title', 1);*/
+add_filter( 'woocommerce_product_tabs', 'woo_remove_product_tabs', 98 );
 
+function woo_remove_product_tabs( $tabs ) {
+    unset( $tabs['description'] );          // Remove the description tab
+    unset( $tabs['reviews'] );          // Remove the reviews tab
+    unset( $tabs['additional_information'] );   // Remove the additional information tab
+    return $tabs;
+}
+
+remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
 remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
 add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 30 );
 
+/*------------------------------------------EXTRA FIELDS----------------------------------------------*/
 
-/*CHANE PRODUCT PRICE ORDER (NORMAL-SALE) based on every product case*/
+
+    // Display Fields
+    add_action('woocommerce_product_options_general_product_data', 'woocommerce_product_custom_fields');
+    // Save Fields
+    add_action('woocommerce_process_product_meta', 'woocommerce_product_custom_fields_save');
+    function woocommerce_product_custom_fields()
+    {
+        global $woocommerce, $post;
+        echo '<div class="product_custom_field">';
+        // Custom Product Text Field
+        woocommerce_wp_text_input(
+            array(
+                'id' => '_custom_product_material',
+                'label' => __('Material', 'woocommerce')
+            )
+        );
+        //Custom Product Number Field
+         woocommerce_wp_text_input(
+            array(
+                'id' => '_custom_product_lenght',
+                'label' => __('Lenght', 'woocommerce')
+            )
+        );
+        //Custom Product  Textarea
+        woocommerce_wp_text_input(
+            array(
+                'id' => '_custom_product_width',
+                'label' => __('Width', 'woocommerce')
+            )
+        );
+        echo '</div>';
+    }
+	
+	/*-----save extra fields in db--------*/
+    function woocommerce_product_custom_fields_save($post_id)
+    {
+        // Custom Product Text Field
+        $woocommerce_custom_product_material = $_POST['_custom_product_material'];
+        if (!empty($woocommerce_custom_product_material))
+            update_post_meta($post_id, '_custom_product_material', esc_attr($woocommerce_custom_product_material));
+    // Custom Product Number Field
+        $woocommerce_custom_product_lenght = $_POST['_custom_product_lenght'];
+        if (!empty($woocommerce_custom_product_lenght))
+            update_post_meta($post_id, '_custom_product_lenght', esc_attr($woocommerce_custom_product_lenght));
+    // Custom Product Textarea Field
+        $woocommerce_custom_product_width = $_POST['_custom_product_width'];
+        if (!empty($woocommerce_custom_product_width))
+            update_post_meta($post_id, '_custom_product_width', esc_html($woocommerce_custom_product_width));
+    }
+	
+	
+	
+add_action( 'woocommerce_single_product_summary', 'hjs_below_single_product_summary', 50 );
+function hjs_below_single_product_summary() {
+		echo "<div class='single_product_custom_features_title'>Features</div>";
+		echo '<table class="single_product_custom_features">';
+		// Display the value of custom product text field
+			echo "<tr><td>Material</td><td>".get_post_meta(get_the_ID(), '_custom_product_material', true)."</td></tr>";
+		// Display the value of custom product number field
+			echo "<tr><td>Lenght</td><td>".get_post_meta(get_the_ID(), '_custom_product_lenght', true)."</td></tr>";
+		// Display the value of custom product text area
+			echo "<tr><td>Width</td><td>".get_post_meta(get_the_ID(), '_custom_product_width', true)."</td></tr>";
+		echo '</table>';
+}
+	
+	
+	
+	
+	
+/*------------------------------------------CHANE PRODUCT PRICE ORDER (NORMAL-SALE) based on every product case----------------------------------------------*/
 
 if (!function_exists('my_commonPriceHtml')) {
 
@@ -218,7 +295,7 @@ if (!function_exists('my_commonPriceHtml')) {
 
 }
 
-//change price order on single product (no variations)
+//----------------change price order on single product (no variations)---------------------------------------
 
 add_filter('woocommerce_get_price_html', 'my_simple_product_price_html', 100, 2);
 
@@ -252,7 +329,7 @@ add_filter('woocommerce_variable_sale_price_html', 'my_variable_product_minmax_p
 add_filter('woocommerce_variable_price_html', 'my_variable_product_minmax_price_html', 10, 2);
 
 
-//change price order on when variation price ahas set
+//-------------------change price order on when variation price ahas set--------------------------------
 function my_variable_product_minmax_price_html($price, $product) {
     $variation_min_price = $product->get_variation_price('min', true);
     $variation_max_price = $product->get_variation_price('max', true);
@@ -277,7 +354,7 @@ remove_action('woocommerce_sidebar','woocommerce_get_sidebar');
 
 
 
-//change varation select to buttons
+//----------------change varation select to buttons-----------------------------
 function variation_radio_buttons($html, $args) {
   $args = wp_parse_args(apply_filters('woocommerce_dropdown_variation_attribute_options_args', $args), array(
     'options'          => false,
