@@ -21,8 +21,8 @@ function theme_features(){
     register_nav_menu('footerLocation3','Footer Menu Three');
 	
 	add_theme_support('woocommerce', array(
-		'thumbnail_image_width' => 1280,
-		'single_image_width'=>255,
+		'thumbnail_image_width' => 960,
+		'single_image_width'=>960,
 		'product_grid' => array(
 			'default_rows'=>10,
 			'min_rows'=>5,
@@ -32,10 +32,7 @@ function theme_features(){
 		add_theme_support('wc-product-gallery-zoom');
 		add_theme_support('wc-product-gallery-lightbox');
 		add_theme_support('wc-product-gallery-slider');
-		
-		if(!isset($content_width)){
-			$content_width=600;
-		}
+	
 		
 }	
 
@@ -104,10 +101,6 @@ function my_setting_markup() {
     <input type="text" id="set_no_of_posts_field" name="set_no_of_posts_field" value="<?php echo get_option( 'set_no_of_posts_field' ); ?>">
     <?php
 }
-
-
-
-
 
 //add sub-menu to posts to count from api
 
@@ -196,36 +189,20 @@ add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_p
 
 /*------------------------------------------EXTRA FIELDS----------------------------------------------*/
 
-
-    // Display Fields
     add_action('woocommerce_product_options_general_product_data', 'woocommerce_product_custom_fields');
-    // Save Fields
     add_action('woocommerce_process_product_meta', 'woocommerce_product_custom_fields_save');
     function woocommerce_product_custom_fields()
     {
         global $woocommerce, $post;
         echo '<div class="product_custom_field">';
-        // Custom Product Text Field
-        woocommerce_wp_text_input(
-            array(
-                'id' => '_custom_product_material',
-                'label' => __('Material', 'woocommerce')
-            )
-        );
-        //Custom Product Number Field
-         woocommerce_wp_text_input(
-            array(
-                'id' => '_custom_product_lenght',
-                'label' => __('Lenght', 'woocommerce')
-            )
-        );
-        //Custom Product  Textarea
-        woocommerce_wp_text_input(
-            array(
-                'id' => '_custom_product_width',
-                'label' => __('Width', 'woocommerce')
-            )
-        );
+        woocommerce_wp_text_input( array( 'id' => '_custom_product_material', 'label' => __('Material', 'woocommerce')  )  );
+         woocommerce_wp_text_input(  array( 'id' => '_custom_product_lenght', 'label' => __('Lenght', 'woocommerce'))   );
+        woocommerce_wp_text_input( array( 'id' => '_custom_product_width', 'label' => __('Width', 'woocommerce') )  );
+		woocommerce_wp_text_input( array( 'id' => '_custom_product_capacity', 'label' => __('Capacity', 'woocommerce') )  );
+		woocommerce_wp_text_input( array( 'id' => '_custom_product_cockpit', 'label' => __('Cockpit', 'woocommerce') )  );
+		woocommerce_wp_text_input( array( 'id' => '_custom_product_weight', 'label' => __('Weight', 'woocommerce') )  );
+		woocommerce_wp_text_input( array( 'id' => '_custom_product_storage_front', 'label' => __('Storage Front', 'woocommerce') )  );
+		woocommerce_wp_text_input( array( 'id' => '_custom_product_storage_rear', 'label' => __('Storage Rear', 'woocommerce') )  );
         echo '</div>';
     }
 	
@@ -244,20 +221,42 @@ add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_p
         $woocommerce_custom_product_width = $_POST['_custom_product_width'];
         if (!empty($woocommerce_custom_product_width))
             update_post_meta($post_id, '_custom_product_width', esc_html($woocommerce_custom_product_width));
+		
+		$woocommerce_custom_product_capacity = $_POST['_custom_product_capacity'];
+        if (!empty($woocommerce_custom_product_capacity))
+            update_post_meta($post_id, '_custom_product_capacity', esc_html($woocommerce_custom_product_capacity));
+		
+		$woocommerce_custom_product_cockpit = $_POST['_custom_product_cockpit'];
+        if (!empty($woocommerce_custom_product_cockpit))
+            update_post_meta($post_id, '_custom_product_cockpit', esc_html($woocommerce_custom_product_cockpit));
+		
+		$woocommerce_custom_product_weight= $_POST['_custom_product_weight'];
+        if (!empty($woocommerce_custom_product_weight))
+            update_post_meta($post_id, '_custom_product_weight', esc_html($woocommerce_custom_product_weight));
+		
+		$woocommerce_custom_product_storage_front= $_POST['_custom_product_storage_front'];
+        if (!empty($woocommerce_custom_product_storage_front))
+            update_post_meta($post_id, '_custom_product_storage_front', esc_html($woocommerce_custom_product_storage_front));
+		
+				$woocommerce_custom_product_storage_rear= $_POST['_custom_product_storage_rear'];
+        if (!empty($woocommerce_custom_product_storage_rear))
+            update_post_meta($post_id, '_custom_product_storage_rear', esc_html($woocommerce_custom_product_storage_rear));
+		
     }
-	
 	
 	
 add_action( 'woocommerce_single_product_summary', 'hjs_below_single_product_summary', 50 );
 function hjs_below_single_product_summary() {
 		echo "<div class='single_product_custom_features_title'>Features</div>";
 		echo '<table class="single_product_custom_features">';
-		// Display the value of custom product text field
 			echo "<tr><td>Material</td><td>".get_post_meta(get_the_ID(), '_custom_product_material', true)."</td></tr>";
-		// Display the value of custom product number field
 			echo "<tr><td>Lenght</td><td>".get_post_meta(get_the_ID(), '_custom_product_lenght', true)."</td></tr>";
-		// Display the value of custom product text area
 			echo "<tr><td>Width</td><td>".get_post_meta(get_the_ID(), '_custom_product_width', true)."</td></tr>";
+			echo "<tr><td>Capacity Approx</td><td>".get_post_meta(get_the_ID(), '_custom_product_capacity', true)."</td></tr>";
+			echo "<tr><td>Cockpit</td><td>".get_post_meta(get_the_ID(), '_custom_product_cockpit', true)."</td></tr>";
+			echo "<tr><td>Weight A-core</td><td>".get_post_meta(get_the_ID(), '_custom_product_weight', true)."</td></tr>";
+			echo "<tr><td>Storage: Front</td><td>".get_post_meta(get_the_ID(), '_custom_product_storage_front', true)."</td></tr>";
+			echo "<tr><td>Storage: Rear</td><td>".get_post_meta(get_the_ID(), '_custom_product_storage_rear', true)."</td></tr>";
 		echo '</table>';
 }
 	
@@ -295,7 +294,7 @@ if (!function_exists('my_commonPriceHtml')) {
 
 }
 
-//----------------change price order on single product (no variations)---------------------------------------
+//----------------change price order on single product (no variations)---------------------------------------//
 
 add_filter('woocommerce_get_price_html', 'my_simple_product_price_html', 100, 2);
 
