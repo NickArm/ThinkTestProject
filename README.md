@@ -22,8 +22,10 @@ Download files, create a folder in "wp-content/themes" folder of your WordPress 
 
 <h3>Built With</h3>
 <ul>
-  <li>Bootstrap</li>
-  <li>JQuery</li>
-  <li>Advance Custom Fields</li>
-  <li>Owl Carousel</li>
+  <li>WooCommerce</li>
+  <li><a href="https://www.advancedcustomfields.com/">Bootstrap</li>
+  <li><a href="https://getbootstrap.com/">JQuery</li>
+  <li><a href="https://www.advancedcustomfields.com/">Advance Custom Fields</a></li>
+  <li><a href="https://owlcarousel2.github.io/OwlCarousel2/">Owl Carousel</a></li>
+ <li><a href="http://koala-app.com/">Koala</a></li>
 </ul>
