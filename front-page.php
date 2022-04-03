@@ -78,9 +78,10 @@
 		<div>
           <div class="carousel_thumb">
 			<?php echo the_post_thumbnail();?>
+			<span class="home-products-points-tag"><?php echo get_field('product_points'); ?>pts</span>
           </div>
 		  <div class="card_body">
-			<span class="our-favorites-categories">PERFOMANCE TOURING</span>
+			<span class="our-favorites-categories"><?php echo get_field('custom_product_type'); ?></span>
               <a href="<?php the_permalink(); ?>"><h5 class="card-text"><?php the_title(); ?></h5></a>
               <span class="our-favorites-price"><?php echo preg_replace('/.00/', '',  $product->get_price_html());?></span>
 			</div>
