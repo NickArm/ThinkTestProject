@@ -1,5 +1,5 @@
 <body <?php body_class(); ?>>
-<div class=”woocommerce”>
+<div class="woocommerce">
 <?php
 
 
