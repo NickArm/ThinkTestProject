@@ -56,6 +56,63 @@
 		</div>
 	  </div>
 	  
+	  
+	   <!-------------------------  TOP CATEGORIES ------------------------------->
+<div class="top-categories main-section">
+    <div class="container">
+	<h2 class="section-title">Top Categories</h2>	  
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+	 <?php 
+	  
+  $args = array(
+         'taxonomy'     => 'product_cat',
+		 'hide_empty' => false
+  );
+ $all_categories = get_categories( $args );
+ foreach ($all_categories as $cat) {
+		$category_id = $cat->term_id;    
+		$thumbnail_id  = (int) get_woocommerce_term_meta( $term->term_id, 'thumbnail_id', true );
+		$cat_thumb_id = get_woocommerce_term_meta( $cat->term_id, 'thumbnail_id', true );
+		$category = get_term_by('slug', $cat->name ,'product_cat'); 
+		$cat_show_check = get_field('cat_show_in_homepage', $category );
+		$thmb = wp_get_attachment_image_src($cat_thumb_id, 'medium');
+		$parentcats = get_ancestors($category_id, 'product_cat');
+		
+		if ($cat_show_check == 1 ){
+			
+		?>
+		  <div class="col">
+          <div class="card ">
+            
+            <div class="card-body">
+				<div class="parentcat"><a href="<?php echo get_term_link($cat->slug, 'product_cat') ;?>"><?php echo get_term( $parentcats [0])->name; ?></a></div>
+				<a href="<?php echo get_term_link($cat->slug, 'product_cat') ;?>"><h5 class="card-text"><?php echo $cat->name; ?></h5></a>
+            </div>
+			<img src="<?php echo $thmb[0]; ?>" alt="<?php echo $cat->name; ?>" />
+          </div>
+        </div>
+		
+		<?
+		}
+
+         
+}
+	
+	
+	
+	?>
+
+
+
+        
+
+      </div>
+    </div>
+  </div>
+  
+  
+  
+	  
 	  <!---------------------------OUR FAVORITES------------------------------------->
 	  
 <div class="py-5 our-favorites main-section">
@@ -77,7 +134,7 @@
 		?>
 		<div>
           <div class="carousel_thumb">
-			<?php echo the_post_thumbnail();?>
+			<?php echo the_post_thumbnail('large');?>
 			<span class="home-products-points-tag"><?php echo get_field('product_points'); ?>pts</span>
           </div>
 		  <div class="card_body">
@@ -108,7 +165,7 @@
 	  
         <div class="col">
           <div class="card ">
-            <?php the_post_thumbnail();?> 
+            <?php the_post_thumbnail('large');?> 
             <div class="card-body">
 				<div class="card-body-details">
 					<div class="blog-tag"><?php echo get_the_category_list();?></div><div class="blog-details"><?php the_time('n.j.Y');?></div>

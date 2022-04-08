@@ -1,6 +1,5 @@
 <?php
 function custom_theme_files(){
-	
     wp_enqueue_script('main_modernizr',get_theme_file_uri('/js/bootstrap.bundle.min.js'),NULL,true);
 	wp_enqueue_script('main_modernizr',get_theme_file_uri('/js/custom.js'),NULL,true);
     wp_enqueue_style('theme_main_style_extra_style', get_theme_file_uri('/css/bootstrap.min.css'));
@@ -98,8 +97,6 @@ function theme_features(){
 	add_theme_support('title-tag'); 
 	
 	add_theme_support('woocommerce', array(
-		'thumbnail_image_width' => 960,
-		'single_image_width'=>960,
 		'product_grid' => array(
 			'default_rows'=>10,
 			'min_rows'=>5,
